@@ -100,7 +100,7 @@ class Option
         return [
             'domain' => [
                 'name' => 'domain',
-                'label' => 'API Domain',
+                'label' => 'API Custom Domain',
                 'type' => 'text',
                 'value' => 'https://ophim1.com',
                 'tab' => 'Setting'

@@ -105,7 +105,6 @@ class Collector
             curl_close($ch);
 
             $img = Image::make($image_data);
-
             if ($shouldResize) {
                 $img->resize($width, $height, function ($constraint) {
                     $constraint->aspectRatio();
@@ -119,7 +118,6 @@ class Collector
             $img->save($tempPath);
             Storage::disk($disk)->put($path, file_get_contents($tempPath));
             unlink($tempPath);
-
             return Storage::url($path);
         } catch (\Exception $e) {
             Log::error($e->getMessage());

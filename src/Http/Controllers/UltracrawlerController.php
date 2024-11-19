@@ -266,8 +266,10 @@ class UltracrawlerController extends Controller
         if ($data['status'] == true) {
             $_id = md5($this->removeAccents(mb_strtolower($this->extractOriginName(trim($data['movie']['origin_name'])))) . '-' . trim($data['movie']['year']) . '-' . trim($data['movie']['type']));
             $data['movie']['_id'] = $_id;
-            $data['movie']['thumb_url'] = $data['movie']['poster_url'];
-            $data['movie']['poster_url'] = $data['movie']['thumb_url'];
+            $poster_url = $data['movie']['thumb_url'];
+            $thumb_url = $data['movie']['poster_url'];
+            $data['movie']['thumb_url'] = $thumb_url;
+            $data['movie']['poster_url'] = $poster_url;
             $data['movie']['category'] = $this->processCategoryOrCountry($data['movie']['category']);
             $data['movie']['country'] = $this->processCategoryOrCountry($data['movie']['country']);
         }
@@ -497,8 +499,8 @@ class UltracrawlerController extends Controller
     }
     public function test(Request $request)
     {
-        $data=Http::get('https://phim.nguonc.com/api/film/'.$request->slug);
-        return $this->processNguoncData($data, $request->slug);
+        $slug=$request->slug;
+        return $this->mergeMovieData($slug);
     }
     public function mergeMovieData($slug, $sources='ophim,kkphim,nguonc')
     {
